@@ -1,3 +1,4 @@
+import Input from '../../components/Input'
 import './styles.css'
 
 function Form() {
@@ -15,12 +16,12 @@ function Form() {
           <Input field='Password' req={true} type='password'/>
         </div>
         <div>
-          <Input placeholder='(83) 00000-0000' field='Phone' type='phone'/>
+          <Input placeholder='(83) 00000-0000' field='Phone' req={false} type='phone'/>
           <Input field='Birthday' req={true} type='date'/>
         </div>
         <span>
-          <Input type='checkbox'/>
-          <Button/>
+          {/* <Input type='checkbox'/> */}
+          {/* <Button/> */}
         </span>
       </form>
     </div>
