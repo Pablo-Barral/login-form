@@ -1,10 +1,26 @@
-import { useState } from 'react'
 import './styles.css'
 
 function Input (props){
 
-    const [error, setError] = useState()
-    // error still not functional
+const dateSplit = (date) => {
+    let birthday = new Date(date)
+    let bday = birthday.getDay()
+    let bmonth = birthday.getMonth()
+    let byear = birthday.getFullYear()
+
+    const today = new Date()
+    let age = (today.getFullYear() - byear)
+    if(today.getMonth() < bmonth){
+        age -= 1
+    }else{
+        if(today.getMonth() === bmonth){
+            if(today.getDay() < bday){
+                age -= 1
+            }
+        }
+    }
+    localStorage.setItem('age', age)
+}
 
 return(
     <div className='inputBox'>
@@ -12,8 +28,14 @@ return(
         <input name={props.field} 
         placeholder={props.placeholder} 
         type={props.type}
-        onChange={ e => localStorage.setItem(`${props.field}`, e.target.value)} />
-        { error && <p className='errorMsg'>{props.field} Invalid</p>}
+        onChange={ e => {
+            if (props.type === 'date'){
+                dateSplit(e.target.value)
+            }else{
+                localStorage.setItem(`${props.field}`, e.target.value)
+            }
+        }} />
+        { !props.valid && <p className='errorMsg'>{props.field} Invalid</p>}
     </div>
 )
 }
