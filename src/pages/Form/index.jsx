@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from '../../components/Button'
 import Input from '../../components/Input'
 import './styles.css'
 
@@ -92,13 +93,8 @@ function Form() {
           </div>
         </div>
         <span>
-          <input type='checkbox' onChange={ e => {
-            setChecked(e.target.checked)
-            console.log(checked, 'kk')
-          }
-           }/>
-          {/* <Button/> */}
-          <button>send</button>
+          <input type='checkbox' onChange={ e => setChecked(e.target.checked) }/>
+          <Button value='Register'/>
         </span>
       </form>
     </div>
