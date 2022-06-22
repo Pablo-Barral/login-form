@@ -9,14 +9,27 @@ function Form() {
   const [valPassword, setValPassword] = useState(true)
   const [valPhone, setValPhone] = useState(true)
   const [valBirth, setValBirth] = useState(true)
-  let checked = false
+  const [checked, setChecked] = useState(false)
 
   const validate = (e) => {
     e.preventDefault()
+
+    let phone = localStorage.getItem('Phone')
+    if (phone){
+      if(/^[0-9]+$/.test(phone) && phone.length === 11){
+        setValPhone(true)
+      }else{
+        setValPhone(false)
+      }
+    }
+
     let fullName = localStorage.getItem('Full Name')
     if (fullName && fullName.length >= 4 && fullName.includes(' ')){
         setValName(true)
     }else{
+      setValName(false)
+    }
+    if(!fullName){
       setValName(false)
     }
 
@@ -41,16 +54,8 @@ function Form() {
     }else{
       setValPassword(false)
     }
-  }
 
-  let phone = localStorage.getItem('Phone')
-  if (phone){
-    if(/^[0-9]+$/.test(phone) && phone.length === 11){
-      setValPhone(true)
-    }else{
-      setValPhone(false)
-    }
-  }
+
 
   let age = localStorage.getItem('age')
   if(age){
@@ -59,12 +64,14 @@ function Form() {
     }else{
       setValBirth(true)
     }
+  }else{
+    setValBirth(false)
   }
 
   if(valName && valEmail && valPassword && valBirth && checked){
     console.log('passed')
   }
-    
+}
 
   return (
     <div className="main">
@@ -85,7 +92,11 @@ function Form() {
           </div>
         </div>
         <span>
-          {/* <Input type='checkbox'/> */}
+          <input type='checkbox' onChange={ e => {
+            setChecked(e.target.checked)
+            console.log(checked, 'kk')
+          }
+           }/>
           {/* <Button/> */}
           <button>send</button>
         </span>
