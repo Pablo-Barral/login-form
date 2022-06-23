@@ -4,6 +4,7 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import logo from '../../assets/signupLogo.png'
 import './styles.css'
+import Checkbox from '../../components/Checkbox'
 
 
 function Form() {
@@ -13,7 +14,8 @@ function Form() {
   const [valPassword, setValPassword] = useState(true)
   const [valPhone, setValPhone] = useState(true)
   const [valBirth, setValBirth] = useState(true)
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(true)
+  let valid = true
 
 
 
@@ -28,6 +30,7 @@ function Form() {
         setValPhone(true)
       }else{
         setValPhone(false)
+        valid = false
       }
     }
 
@@ -36,9 +39,11 @@ function Form() {
         setValName(true)
     }else{
       setValName(false)
+      valid = false
     }
     if(!fullName){
       setValName(false)
+      valid = false
     }
 
     let email = localStorage.getItem('Email')
@@ -47,9 +52,11 @@ function Form() {
         setValEmail(true)
       }else{
         setValEmail(false)
+        valid = false
       }
     }else{
       setValEmail(false)
+      valid = false
     }
 
     let password = localStorage.getItem('Password')
@@ -58,23 +65,40 @@ function Form() {
         setValPassword(true)
       }else{
         setValPassword(false)
+        valid = false
       }
     }else{
       setValPassword(false)
+      valid = false
     }
 
   let age = localStorage.getItem('age')
   if(age){
     if (0 > age > 121){
       setValBirth(false)
+      valid = false
     }else{
       setValBirth(true)
     }
   }else{
     setValBirth(false)
+    valid = false
   }
 
-  if(valName && valEmail && valPassword && valBirth && checked){
+  let terms = localStorage.getItem('terms')
+  if(terms){
+    if(terms === 'true'){
+      setChecked(true)
+    }else{
+      setChecked(false)
+      valid = false
+    }
+  }else{
+    setChecked(false)
+    valid = false
+  }
+
+  if(valid){
     nav('/success')
     localStorage.clear()
   }
@@ -100,11 +124,10 @@ function Form() {
         </div>
         <div className='footBox'>
           <span>
-            <span>
-              <input name='terms' type='checkbox' onChange={ e => setChecked(e.target.checked) }/>
-              <label htmlFor='terms'>I accept the terms and privacy</label>
-            </span>
-            {!checked && <p className='errorMsg'>You must accept the terms</p>}
+            <Checkbox name='terms'
+            label='I accept the terms and privacy'
+            valid={checked}
+            msg='You must accept the terms'/>
           </span>
           <Button value='Register'/>
         </div>
