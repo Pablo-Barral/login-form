@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+import logo from '../../assets/signupLogo.png'
 import './styles.css'
+
 
 function Form() {
 
@@ -12,6 +14,8 @@ function Form() {
   const [valPhone, setValPhone] = useState(true)
   const [valBirth, setValBirth] = useState(true)
   const [checked, setChecked] = useState(false)
+
+
 
   const nav = useNavigate()
 
@@ -78,26 +82,32 @@ function Form() {
 
   return (
     <div className="main">
-      <form className='modal' onSubmit={e => validate(e)}>
         <header>
-            <img alt='Header Image'/>
+            <img src={logo} alt='Header Image'/>
             <h1>Intern Sign Up</h1>
         </header>
+      <form className='modal' onSubmit={e => validate(e)}>
         <Input placeholder='Name' field='Full Name' req={true} valid={valName}/>
-        <div>
-          <div>
+        <div className='divisionBox'>
+          <div className='overBox'>
             <Input placeholder='foo@bar.com' field='Email' req={true} type='email' valid={valEmail}/>
             <Input field='Password' req={true} type='password' valid={valPassword}/>
           </div>
-          <div>
+          <div className='subBox'>
             <Input placeholder='(83) 00000-0000' field='Phone' req={false} type='phone' valid={valPhone}/>
             <Input field='Birthday' req={true} type='date' valid={valBirth}/>
           </div>
         </div>
-        <span>
-          <input type='checkbox' onChange={ e => setChecked(e.target.checked) }/>
+        <div className='footBox'>
+          <span>
+            <span>
+              <input name='terms' type='checkbox' onChange={ e => setChecked(e.target.checked) }/>
+              <label htmlFor='terms'>I accept the terms and privacy</label>
+            </span>
+            {!checked && <p className='errorMsg'>You must accept the terms</p>}
+          </span>
           <Button value='Register'/>
-        </span>
+        </div>
       </form>
     </div>
   )

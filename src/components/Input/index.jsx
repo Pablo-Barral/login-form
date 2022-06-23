@@ -1,4 +1,4 @@
-import './styles.css'
+import styled from 'styled-components'
 
 function Input (props){
 
@@ -23,7 +23,7 @@ const dateSplit = (date) => {
 }
 
 return(
-    <div className='inputBox'>
+    <div className={props.className}>
         <label htmlFor={props.field}>{props.field} {props.req && '*'}</label>
         <input name={props.field} 
         placeholder={props.placeholder} 
@@ -40,4 +40,22 @@ return(
 )
 }
 
-export default Input
+const StyledInput = styled(Input)`
+display: flex;
+flex-direction: column;
+color: #767676;
+width: 100%;
+font-size: 14px;
+input{
+    border: 2px solid #AAAAAA;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+
+}
+.errorMsg{
+    color: red;
+}
+`
+
+export default StyledInput
