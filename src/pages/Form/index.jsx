@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import './styles.css'
@@ -11,6 +12,8 @@ function Form() {
   const [valPhone, setValPhone] = useState(true)
   const [valBirth, setValBirth] = useState(true)
   const [checked, setChecked] = useState(false)
+
+  const nav = useNavigate()
 
   const validate = (e) => {
     e.preventDefault()
@@ -56,8 +59,6 @@ function Form() {
       setValPassword(false)
     }
 
-
-
   let age = localStorage.getItem('age')
   if(age){
     if (0 > age > 121){
@@ -70,7 +71,8 @@ function Form() {
   }
 
   if(valName && valEmail && valPassword && valBirth && checked){
-    console.log('passed')
+    nav('/success')
+    localStorage.clear()
   }
 }
 
