@@ -1,5 +1,6 @@
-import styled from 'styled-components'
 import './styles.css'
+import styled from 'styled-components'
+import React from 'react'
 
 function Checkbox (props){
 
